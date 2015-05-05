@@ -86,7 +86,7 @@ int main(int argc, char *argv[]){
       printf("Generate a new size\n");
 }
 
-  float *matrix0 = (float *)memalign(sizeof(float)*4, sizeof(float)*newsize);//(float *)malloc(sizeof(float)*size);
+  float *matrix0 = (float *)memalign(sizeof(float)*4, sizeof(float)*newsize*newsize);//(float *)malloc(sizeof(float)*size);
   if(matrix0==NULL){
     printf("can't allocate the required memory for matrix0\n");
     return 0;
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]){
     return 0;
   }
 
-  float *result_sq = (float *)memalign(sizeof(float), sizeof(float)*size);
+  float *result_sq = (float *)memalign(sizeof(float), sizeof(float)*size*size);
   if(result_sq==NULL){
     printf("can't allocate the required memory for result_sq\n");
     free(matrix0);
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
     return 0;
   }
 
-  float *result_pl = (float *)memalign(sizeof(float)*4, sizeof(float)*newsize);
+  float *result_pl = (float *)memalign(sizeof(float)*4, sizeof(float)*newsize*newsize);
   if(result_pl==NULL){
     printf("can't allocate the required memory for result_pl\n");
     free(matrix0);
