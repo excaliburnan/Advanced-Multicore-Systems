@@ -54,22 +54,22 @@ void matrix_mult_sq(int size, float *matrix0_in,
 void matrix_mult_sse(int size, float *matrix0_in,
 		      float *matrix1_in, float *matrix_out){
   __m128 a_line, b_line, r_line;
-  int i, j;
-  for(i =0; i<size; i++){
-    for (i=0; i<size; i+=4){
-      j = 0;
-      b_line = _mm_load_ps(&matrix1_in[i]); // b_line = vec4(matrix[i][0])
-      a_line = _mm_set1_ps(matrix0_in[j]);      // a_line = vec4(vector_in[0])
-      r_line = _mm_mul_ps(a_line, b_line); // r_line = a_line * b_line
-      for (j=1; j<size; j++) {
-        b_line = _mm_load_ps(&matrix1_in[j*size+i]); // a_line = vec4(column(a, j))
-        a_line = _mm_set1_ps(matrix0_in[j]);  // b_line = vec4(b[i][j])
+  int i, j, k;
+  for(k =0; k<size; k++){  
+    	for (i=0; i<size; i+=4){
+      	j = 0;
+      	b_line = _mm_load_ps(&matrix1_in[i]); // b_line = vec4(matrix[i][0])
+      	a_line = _mm_set1_ps(matrix0_in[j+size*k]);      // a_line = vec4(vector_in[0])
+      	r_line = _mm_mul_ps(a_line, b_line); // r_line = a_line * b_line
+      	for (j=1; j<size; j++) {
+        	b_line = _mm_load_ps(&matrix1_in[j*size+i]); // a_line = vec4(column(a, j))
+        	a_line = _mm_set1_ps(matrix0_in[j+size*k]);  // b_line = vec4(b[i][j])
                                      // r_line += a_line * b_line
-        r_line = _mm_add_ps(_mm_mul_ps(a_line, b_line), r_line);
-      }
-      _mm_store_ps(&matrix_out[i], r_line);     // r[i] = r_line
-    }
-  }
+        	r_line = _mm_add_ps(_mm_mul_ps(a_line, b_line), r_line);
+      	}
+      	_mm_store_ps(&matrix_out[i+size*k], r_line);     // r[i] = r_line
+    	}  
+  }	
 }
 
 
