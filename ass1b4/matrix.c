@@ -44,10 +44,10 @@ void matrix_mult_sq(int size, float *matrix0_in,
   // }
   for(rows=0; rows<size; rows++){
     for(cols=0; cols<size; cols++){
-      matrix_out[cols] = 0.0;
+      matrix_out[cols + rows*size] = 0.0;
       for(k=0;k<size;k++)
         matrix_out[cols+rows*size] += matrix0_in[rows*size + k ] * matrix1_in[k*size + cols];
-    }
+    }		
   }
 }
 
